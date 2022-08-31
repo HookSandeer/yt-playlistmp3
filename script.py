@@ -11,7 +11,7 @@ def userLink():
 
 
 def userPath():
-    var = input("Entrer le chemin d'accès du dossier dans lequelle les morceaux seront téléchargés\n=> ").lower()
+    var = input("Entrer le chemin d'accès du dossier dans lequelle les morceaux seront téléchargés\n=> ")
     return var
 
 
@@ -25,18 +25,19 @@ def valide():
 
 def download(playlist, uPath):
     playlistLen = len(playlist.videos)
-    print("Téléchargement de laplaylist : {}\n Nombre de vidéos : {}".format(playlist.title, playlistLen))
+    print("Téléchargement de laplaylist : {}\n Nombre de vidéos : {}\n\n".format(playlist.title, playlistLen))
     count = 0
     if valide() :
         for video in playlist.videos :
             count += 1
-            print("Téléchargement de la vidéo {}/{}".format(count, playlistLen))
+            print("Téléchargement de la vidéo {}/{}\n".format(count, playlistLen))
             audioFile = video.streams.filter(only_audio=True).first()
-            file = audioFile.download(uPath)
+            file = audioFile.download(output_path=uPath)
             base, ext = os.path.splitext(file)
             newFile = base + ".mp3"
             os.rename(file, newFile)
-            print("{} a finit de télécharger.".format(video.title))
+            nbrChara = len(video.title)
+            print("{} a finit de télécharger.\n==============================================\n\n".format(video.title))
         print("Téléchargement terminé.")
     else :
         input("Appuyer sur entrer pour quitter, téléchargement annulé")
