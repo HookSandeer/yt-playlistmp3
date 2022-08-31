@@ -16,7 +16,7 @@ def download(playlist):
     for video in playlist.videos :
         count += 1
         print("Téléchargement de la vidéo {}/{}".format(count, playlistLen))
-        file = video.streams.get_lowest_resolution().download()
+        file = video.streams.filter(only_audio=True).download()
         base, ext = os.path.splitext(file)
         newFile = base + ".mp3"
         os.rename(file, newFile)
