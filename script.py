@@ -5,9 +5,15 @@ import os
 from pytube import Playlist
 
 def userLink():
-    var = input("Entrer votre lien de la playloist youtube \n=> ")
+    var = input("Entrer votre lien de la playlist YouTube \n=> ")
     downloadFile = Playlist(var)
     return downloadFile
+
+
+def userPath():
+    var = input("Entrer le chemin d'accès du dossier dans lequelle les morceaux seront téléchargés\n=> ").lower()
+    return var
+
 
 def valide():
     user = input("Voulez vous télécharger cette playlist ? [Y/o]\n=> ").lower()
@@ -16,7 +22,8 @@ def valide():
     else :
         return False
 
-def download(playlist):
+
+def download(playlist, uPath):
     playlistLen = len(playlist.videos)
     print("Téléchargement de laplaylist : {}\n Nombre de vidéos : {}".format(playlist.title, playlistLen))
     count = 0
@@ -25,7 +32,7 @@ def download(playlist):
             count += 1
             print("Téléchargement de la vidéo {}/{}".format(count, playlistLen))
             audioFile = video.streams.filter(only_audio=True).first()
-            file = audioFile.download()
+            file = audioFile.download(uPath)
             base, ext = os.path.splitext(file)
             newFile = base + ".mp3"
             os.rename(file, newFile)
@@ -35,10 +42,6 @@ def download(playlist):
         input("Appuyer sur entrer pour quitter, téléchargement annulé")
 
 
-    
-
-    
 if __name__ ==  '__main__' :
-    download(userLink())
+    download(userLink(), userPath())
     input = ("Appuyer sur Entrer pour quiter...")
-    
