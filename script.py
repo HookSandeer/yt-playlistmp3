@@ -25,12 +25,12 @@ def valide():
 
 def download(playlist, uPath):
     playlistLen = len(playlist.videos)
-    print("Téléchargement de laplaylist : {}\n Nombre de vidéos : {}\n\n".format(playlist.title, playlistLen))
+    print("Téléchargement de la playlist : {}\n Nombre de vidéos : {}\n\n".format(playlist.title, playlistLen))
     count = 0
     if valide() :
         for video in playlist.videos :
             count += 1
-            print("Téléchargement de la vidéo {}/{}\n".format(count, playlistLen))
+            print("Téléchargement du morceaux {}/{}\n".format(count, playlistLen))
             audioFile = video.streams.filter(only_audio=True).first()
             file = audioFile.download(output_path=uPath)
             base, ext = os.path.splitext(file)
